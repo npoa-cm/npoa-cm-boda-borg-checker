@@ -1,3 +1,4 @@
+import json
 import os
 import requests
 import time
@@ -37,6 +38,21 @@ INTERVAL = 300
 
 # Bereits gemeldete Sessions
 notified = set()
+
+STATE_FILE = "notified_sessions.json"
+
+def load_notified():
+    try:
+        with open(STATE_FILE, "r") as f:
+            return set(json.load(f))
+    except (FileNotFoundError, json.JSONDecodeError):
+        return set()
+
+def save_notified():
+    with open(STATE_FILE, "w") as f:
+        json.dump(sorted(notified), f)
+
+notified = load_notified()
 
 
 def telegram(message):
@@ -110,9 +126,10 @@ def check_availability():
                             "https://checkout.roller.app/bodaborgbochum/"
                             "products/bodaborgzrichonlinecheckout#/sessions"
                         )
-
+                        
                         if telegram(message):
                             notified.add(name)
+                            save_notified()
 
                         print("Mögliche Verfügbarkeit:", name)
 

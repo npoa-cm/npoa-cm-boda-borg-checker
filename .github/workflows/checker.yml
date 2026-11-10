@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   check:
@@ -30,3 +30,14 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python bodaborg_checker.py
+        
+      - name: Meldestatus speichern
+        if: always()
+        run: |
+          if [ -f notified_sessions.json ]; then
+            git config user.name "Boda Borg Checker"
+            git config user.email "checker@users.noreply.github.com"
+            git add notified_sessions.json
+            git diff --cached --quiet || git commit -m "Update notification state"
+            git push
+          fi
