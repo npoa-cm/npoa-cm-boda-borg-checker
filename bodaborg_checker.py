@@ -104,7 +104,7 @@ def check_availability():
                 start = session.get("startTime", 0)
                 name = session.get("name", "Unbekannt")
 
-                if not (1400 <= start <= 1530):
+                if not (1400 <= start <= 2000):
                     continue
 
                 full = session.get("isSessionCapacityFull", True)
