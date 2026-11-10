@@ -19,9 +19,9 @@ CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 URL = "https://api.roller.app/api/products/availabilities/widget"
 
 PARAMS = {
-    "endDateIndex": "20261114",
+    "endDateIndex": "20261115",
     "group": "bodaborgzrichonlinecheckout",
-    "startDateIndex": "20261114",
+    "startDateIndex": "20261115",
 }
 
 HEADERS = {
@@ -104,7 +104,7 @@ def check_availability():
                 start = session.get("startTime", 0)
                 name = session.get("name", "Unbekannt")
 
-                if not (1400 <= start <= 2000):
+                if not (1400 <= start <= 1530):
                     continue
 
                 full = session.get("isSessionCapacityFull", True)
@@ -118,7 +118,7 @@ def check_availability():
 
                         message = (
                             "🎉 BODA BORG – MÖGLICHE VERFÜGBARKEIT!\n\n"
-                            "Datum: 14.11.2026\n"
+                            "Datum: 15.11.2026\n"
                             f"Startzeit: {name} Uhr\n"
                             "Produkt: Questing 2 Stunden\n"
                             "Gesucht: mindestens 4 Personen\n\n"
@@ -146,12 +146,10 @@ def check_availability():
 print("=" * 45)
 print("BODA BORG CHECKER GESTARTET")
 print("Produkt: Questing 2 Stunden")
-print("Datum: 14.11.2026")
+print("Datum: 15.11.2026")
 print("Zeitraum: 14:00–15:30")
 print("Prüfung alle 5 Minuten")
 print("=" * 45)
-
-telegram("✅ Boda Borg Checker wurde gestartet!")
 
 try:
     print("Prüfung:", datetime.now().strftime("%H:%M:%S"))
